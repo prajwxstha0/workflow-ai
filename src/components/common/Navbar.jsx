@@ -6,7 +6,6 @@ import { logout } from "../../services/authService";
 
 import { faArrowDown, faBell, faGear, faMoon, faSearch, faSignOut, faSun, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNotifications } from "../../context/NotificationContext";
 import DashboardNotificationGrid from "./dashboardNotification/DashboardNotificationGrid";
 
 const Navbar = () => {
