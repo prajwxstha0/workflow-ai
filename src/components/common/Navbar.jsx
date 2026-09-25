@@ -16,7 +16,6 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const { user } = useAuth();
-  const { unreadCount, markAllAsRead } = useNotifications();
 
   async function logoutuser() {
     await logout();
@@ -77,11 +76,6 @@ const Navbar = () => {
             setnotificationpopup(!notificationpopup)
           }}>
           <FontAwesomeIcon icon={faBell} />
-          {unreadCount > 0 && (
-            <span className="absolute -top-2 -right-2 min-w-4 h-4 px-1 rounded-full bg-red-500 text-white text-[10px] leading-4 text-center">
-              {unreadCount > 99 ? "99+" : unreadCount}
-            </span>
-          )}
 
           {notificationpopup && (
             <div
@@ -89,9 +83,6 @@ const Navbar = () => {
               className="absolute z-99 w-90 top-10 right-0 bg-gray-100 border-none rounded-md shadow-md cursor-auto">
               <div
                 className="flex justify-between p-3 border-b border-gray-300">
-                <h2 className="font-medium">
-                  Notifications {unreadCount > 0 && <span className="text-[12px] text-gray-500">({unreadCount} new)</span>}
-                </h2>
                 <button
                   type="button"
                   disabled={unreadCount === 0}
