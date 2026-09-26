@@ -2,8 +2,11 @@ import { useState } from "react";
 import GreatingHeaderGird from "../components/dashboard/GreatingHeaderGird";
 import StateCardGrid from "../components/dashboard/StateCardGrid";
 import TestNewTask from "../components/dashboard/TestNewTask";
+import ActivityItem from "../components/dashboard/activity/ActivityItem";
 import TaskCompletion from "../components/dashboard/charts/TaskCompletion";
 import WeeklyProduction from "../components/dashboard/charts/WeeklyProduction";
+import DeadlineItem from "../components/dashboard/deadlines/DeadlineItem";
+import ProjectProgressItems from "../components/dashboard/projects/ProjectProgressItems";
 import TaskListItems from "../components/dashboard/tasks/TaskListItems";
 
 const DashBoard = () => {
@@ -36,6 +39,12 @@ const DashBoard = () => {
         <TaskCompletion />
         <WeeklyProduction />
         <TaskListItems />
+      </div>
+
+      <div className="px-8 mb-6 overflow-y-visible grid text-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <ProjectProgressItems />
+        <ActivityItem />
+        <DeadlineItem />
       </div>
     </div>
   );
