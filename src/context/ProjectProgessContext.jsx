@@ -1,20 +1,29 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const ProjectProgessContext = createContext();
 
 export const ProjectProgessProvider = ({ children }) => {
-  const projects = [
+  const [projects, setProjects] = useState([
     { name: "Mobile App v3", status: "on-track", percent: 68 },
-    { name: "API Gateway", status: "at-risk", percent: 45 },
+    { name: "API Gateway", status: "at-risk", percent: 50 },
     { name: "Design System", status: "on-track", percent: 90 },
     { name: "Analytics Dashboard", status: "delayed", percent: 23 },
-  ];
+  ]);
+
+  const updateProjectProgress = (projectName, newPercent) => {
+    setProjects((prevProjects) => {
+      return prevProjects.map((project) => {
+        return project.name === projectName
+          ? { ...project, percent: newPercent }
+          : project;
+      });
+    });
+  };
+
   return (
-    <div>
-      <ProjectProgessContext.Provider value={{ projects }}>
-        {children}
-      </ProjectProgessContext.Provider>
-    </div>
+    <ProjectProgessContext.Provider value={{ projects, updateProjectProgress }}>
+      {children}
+    </ProjectProgessContext.Provider>
   );
 };
 

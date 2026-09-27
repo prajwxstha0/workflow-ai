@@ -7,13 +7,13 @@ const ProjectProgressItems = () => {
   const { projects } = useProjectProgress();
 
   return (
-    <div className="h-100 bg-white rounded-2xl">
-      <div className="flex px-4 py-6">
-        <h1>Project Progress</h1>
+    <div className="h-100 bg-white rounded-2xl px-4 py-6 ">
+      <div className="flex justify-between items-center pb-2">
+        <h1 className="font-bold">Project Progress</h1>
         <FontAwesomeIcon icon={faArrowRight} />
       </div>
 
-      <div>
+      <div className=" flex flex-col  text-start overflow-y-auto w-full">
         {projects.length === 0 && (
           <span className="text-red-400">No project yet</span>
         )}
