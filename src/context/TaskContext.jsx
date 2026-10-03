@@ -9,8 +9,15 @@ const TaskContext = ({ children }) => {
     settask((prevTasks) => [...prevTasks, newTask]);
   };
 
+  const deleteTask = (taskTitle) => {
+    // Implement delete task logic here
+    settask((prevTasks) =>
+      prevTasks.filter((task) => task.title !== taskTitle),
+    );
+  };
+
   return (
-    <createTaskContext.Provider value={{ task, addTask }}>
+    <createTaskContext.Provider value={{ task, addTask, deleteTask }}>
       {children}
     </createTaskContext.Provider>
   );

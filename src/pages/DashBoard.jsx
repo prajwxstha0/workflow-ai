@@ -38,7 +38,7 @@ const DashBoard = () => {
       <div className="gap-5 px-8 mb-6  overflow-y-visible grid text-center w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         <TaskCompletion />
         <WeeklyProduction />
-        <TaskListItems />
+        <TaskListItems setShowTaskForm={setshowTaskForm} />
       </div>
 
       <div className="px-8 mb-6 overflow-y-visible grid text-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3">

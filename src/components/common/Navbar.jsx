@@ -85,8 +85,6 @@ const Navbar = () => {
                 className="flex justify-between p-3 border-b border-gray-300">
                 <button
                   type="button"
-                  disabled={unreadCount === 0}
-                  onClick={markAllAsRead}
                   className="cursor-pointer text-indigo-600 text-[12px] disabled:text-gray-400 disabled:cursor-default">
                   Mark all read</button>
               </div>

@@ -1,8 +1,12 @@
 import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useProjectProgress } from "../../../context/ProjectProgessContext";
+import { useTask } from "../../../context/TaskContext";
 
-const TodaysTasks = ({ title, priority }) => {
+const TodaysTasks = ({ title, priority, project }) => {
+  const { updateProjectProgress } = useProjectProgress();
+  const { deleteTask } = useTask();
   const [done, setdone] = useState(false);
   const priorityleveltext = {
     high: "text-red-600",
@@ -23,6 +27,7 @@ const TodaysTasks = ({ title, priority }) => {
         className={`cursor-pointer ${done ? "text-green-400" : "text-gray-300"}`}
         onClick={(e) => {
           setdone(!done);
+          updateProjectProgress(done ? 5 : -5);
         }}
       >
         {done ? (
@@ -43,6 +48,14 @@ const TodaysTasks = ({ title, priority }) => {
         >
           {priority}
         </span>
+
+        <button
+          onClick={(e) => {
+            deleteTask(title);
+          }}
+        >
+          ❌
+        </button>
       </div>
     </div>
   );

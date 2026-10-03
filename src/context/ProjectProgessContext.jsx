@@ -10,11 +10,11 @@ export const ProjectProgessProvider = ({ children }) => {
     { name: "Analytics Dashboard", status: "delayed", percent: 23 },
   ]);
 
-  const updateProjectProgress = (projectName, newPercent) => {
+  const updateProjectProgress = (newPercent) => {
     setProjects((prevProjects) => {
       return prevProjects.map((project) => {
-        return project.name === projectName
-          ? { ...project, percent: newPercent }
+        return project.name === "Mobile App v3"
+          ? { ...project, percent: project.percent + newPercent }
           : project;
       });
     });
