@@ -9,7 +9,7 @@ const TaskListItems = ({ setShowTaskForm }) => {
       <div className="flex w-full justify-between items-center pb-2">
         <h1 className="font-bold">{"Today's Task"}</h1>
         <button
-          className="rounded-2xl border p-2"
+          className="rounded-xl border p-2 bg-indigo-500 text-white hover:bg-indigo-600 hover:transition-colors duration-200"
           onClick={() => setShowTaskForm(true)}
         >
           Add Task
@@ -23,7 +23,7 @@ const TaskListItems = ({ setShowTaskForm }) => {
             key={item.title}
             title={item.title}
             priority={item.priority}
-            project={item.project}
+            comProject={item.project}
           />
         ))}
       </div>

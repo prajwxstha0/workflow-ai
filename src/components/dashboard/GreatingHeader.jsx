@@ -22,7 +22,7 @@ const GreatingHeader = ({ userName, onCreateTask }) => {
         onClick={() => {
           onCreateTask(true);
         }}
-        className=" flex gap-3 bg-indigo-600 rounded-md px-2 text-white cursor-pointer items-center hover:bg-indigo-700 hover:scale-102"
+        className="w-30 h-12 flex gap-3 bg-indigo-600 rounded-md px-2 text-white cursor-pointer justify-center items-center hover:bg-indigo-700 hover:scale-102"
         type="button"
       >
         <span>

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTask } from "../../context/TaskContext";
 
 const TestNewTask = ({ onSaveTask }) => {
+  const projectref = useRef();
+
   const [tasktitle, settasktitle] = useState("");
   const [taskdesc, settaskdesc] = useState("");
   const [taskproject, settaskproject] = useState("");
@@ -56,15 +58,17 @@ const TestNewTask = ({ onSaveTask }) => {
 
       <div className="text-start flex justify-between px-15">
         <label>Project</label>
-        <input
-          required
-          type="text"
-          className="border rounded-md px-3 py-1 focus:outline-none"
-          value={taskproject}
-          onChange={(e) => {
-            settaskproject(e.target.value);
-          }}
-        />
+        <select
+          className="text-gray-700 outline-none border rounded-md px-5 py-1 focus:outline-none"
+          onChange={(e) => 
+            settaskproject(e.target.value)
+          }
+        >
+          <option value="Wobile App v3">Wobile App v3</option>
+          <option value="API Gateway">API Gateway</option>
+          <option value="Design System">Design System</option>
+          <option value="Analytics Dashboard">Analytics Dashboard</option>
+        </select>
       </div>
 
       <div className="text-start flex justify-between px-15">
@@ -72,7 +76,7 @@ const TestNewTask = ({ onSaveTask }) => {
         <input
           required
           type="range"
-          className="border rounded-md px-3 py-1 focus:outline-none"
+          className="border rounded-md px-3 py-1 focus:outline-none "
           value={taskpriority}
           onChange={(e) => {
             settaskpriority(e.target.value);

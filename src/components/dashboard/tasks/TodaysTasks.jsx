@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useProjectProgress } from "../../../context/ProjectProgessContext";
 import { useTask } from "../../../context/TaskContext";
 
-const TodaysTasks = ({ title, priority, project }) => {
+const TodaysTasks = ({ title, priority, comProject }) => {
   const { updateProjectProgress } = useProjectProgress();
   const { deleteTask } = useTask();
   const [done, setdone] = useState(false);
@@ -27,7 +27,7 @@ const TodaysTasks = ({ title, priority, project }) => {
         className={`cursor-pointer ${done ? "text-green-400" : "text-gray-300"}`}
         onClick={(e) => {
           setdone(!done);
-          updateProjectProgress(done ? 5 : -5);
+          updateProjectProgress(done ? -5 : +5, comProject);
         }}
       >
         {done ? (
@@ -37,19 +37,22 @@ const TodaysTasks = ({ title, priority, project }) => {
         )}
       </span>
 
-      <div className="flex flex-col text-start">
-        <h2
-          className={`${done ? "line-through text-gray-400" : ""} font-normal`}
-        >
-          {title}
-        </h2>
-        <span
-          className={`text-[10px] font-bold rounded-2xl w-fit px-2 ${priorityleveltext[priority]} ${prioritylevelbg[priority]}`}
-        >
-          {priority}
-        </span>
+      <div className="flex justify-between w-full items-center">
+        <div className="flex flex-col text-start">
+          <h2
+            className={`${done ? "line-through text-gray-400" : ""} font-normal`}
+          >
+            {title}
+          </h2>
+          <span
+            className={`text-[10px] font-bold rounded-2xl w-fit px-2 ${priorityleveltext[priority]} ${prioritylevelbg[priority]}`}
+          >
+            {priority}
+          </span>
+        </div>
 
         <button
+          className="pr-2"
           onClick={(e) => {
             deleteTask(title);
           }}
