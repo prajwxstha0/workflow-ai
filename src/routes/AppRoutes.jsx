@@ -6,6 +6,7 @@ import DashBoard from "../pages/DashBoard";
 import Landing from "../pages/Landing";
 import Notifications from "../pages/Notifications";
 import Projects from "../pages/Projects";
+import Tasks from "../pages/Tasks";
 import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
@@ -26,6 +27,7 @@ const AppRoutes = () => {
       >
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/project" element={<Projects />} />
+        <Route path="/task" element={<Tasks />} />
         <Route path="/notification" element={<Notifications />} />
       </Route>
     </Routes>

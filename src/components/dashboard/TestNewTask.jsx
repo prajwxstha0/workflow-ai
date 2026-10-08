@@ -6,7 +6,7 @@ const TestNewTask = ({ onSaveTask }) => {
 
   const [tasktitle, settasktitle] = useState("");
   const [taskdesc, settaskdesc] = useState("");
-  const [taskproject, settaskproject] = useState("");
+  const [taskproject, settaskproject] = useState("Mobile App v3");
   const [taskpriority, settaskpriority] = useState("");
   const [prioritylevel, setprioritylevel] = useState("low");
   const [taskassignee, settaskassignee] = useState("");
@@ -60,11 +60,11 @@ const TestNewTask = ({ onSaveTask }) => {
         <label>Project</label>
         <select
           className="text-gray-700 outline-none border rounded-md px-5 py-1 focus:outline-none"
-          onChange={(e) => 
+          onClick={(e) => 
             settaskproject(e.target.value)
           }
         >
-          <option value="Wobile App v3">Wobile App v3</option>
+          <option value="Mobile App v3">Mobile App v3</option>
           <option value="API Gateway">API Gateway</option>
           <option value="Design System">Design System</option>
           <option value="Analytics Dashboard">Analytics Dashboard</option>

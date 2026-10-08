@@ -7,41 +7,31 @@ export const ProjectProgessProvider = ({ children }) => {
     {
       name: "Mobile App v3",
       status: "on-track",
-      percent: 68,
+      percent: 0,
       bgColor: "bg-green-100",
     },
     {
       name: "API Gateway",
       status: "at-risk",
-      percent: 50,
+      percent: 0,
       bgColor: "bg-orange-100",
     },
     {
       name: "Design System",
       status: "on-track",
-      percent: 90,
+      percent: 0,
       bgColor: "bg-green-100",
     },
     {
       name: "Analytics Dashboard",
       status: "delayed",
-      percent: 23,
+      percent: 0,
       bgColor: "bg-red-100",
     },
   ]);
 
-  const updateProjectProgress = (newPercent, comProject) => {
-    setProjects((prevProjects) => {
-      return prevProjects.map((project) => {
-        return project.name === comProject
-          ? { ...project, percent: project.percent + newPercent }
-          : project;
-      });
-    });
-  };
-
   return (
-    <ProjectProgessContext.Provider value={{ projects, updateProjectProgress }}>
+    <ProjectProgessContext.Provider value={{ projects }}>
       {children}
     </ProjectProgessContext.Provider>
   );

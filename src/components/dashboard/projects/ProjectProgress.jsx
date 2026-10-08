@@ -1,7 +1,4 @@
-import { useProjectProgress } from "../../../context/ProjectProgessContext";
-
 const ProjectProgress = ({ item }) => {
-  const { updateProjectProgress } = useProjectProgress();
   return (
     <div className="flex flex-col gap-2 py-2 w-full">
       <div className="grid grid-cols-3 gap-2 w-full text-start items-center">

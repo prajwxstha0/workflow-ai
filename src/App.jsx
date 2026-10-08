@@ -9,11 +9,11 @@ const App = () => {
     <>
       <AuthProvider>
         <BrowserRouter>
-          <ProjectProgessProvider>
-            <TaskContext>
+          <TaskContext>
+            <ProjectProgessProvider>
               <AppRoutes />
-            </TaskContext>
-          </ProjectProgessProvider>
+            </ProjectProgessProvider>
+          </TaskContext>
         </BrowserRouter>
       </AuthProvider>
     </>

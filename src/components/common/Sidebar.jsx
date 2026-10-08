@@ -10,7 +10,7 @@ const Sidebar = () => {
   const navItem = [
     { icon: < FontAwesomeIcon icon={faDashboard}/>, label: "Dashboard", to: "/dashboard" },
     { icon: < FontAwesomeIcon icon={faProjectDiagram}/> , label: "Projects", to: "/project" },
-    { label: "Tasks", to: "/tasks", icon: < FontAwesomeIcon icon={faTasks} />  },
+    { label: "Tasks", to: "/task", icon: < FontAwesomeIcon icon={faTasks} />  },
     { label: "Calendar", to: "/calendar", icon: < FontAwesomeIcon icon={faCalendar}/> },
     { label: "Messages", to: "/messages", icon: < FontAwesomeIcon icon={faMessage}/> },
     { label: "Analytics", to: "/analytics", icon: < FontAwesomeIcon icon={faProjectDiagram}/> },
@@ -59,7 +59,7 @@ const bottomItems = [
         ))}
       </div>
 
-      <div className="mt-20 text-[12px]">
+      <div className="mt-6 text-[12px]">
         {bottomItems.map((item) => (
           <Link
             key={item.label}

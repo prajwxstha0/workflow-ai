@@ -20,10 +20,11 @@ const TaskListItems = ({ setShowTaskForm }) => {
 
         {task.map((item) => (
           <TodaysTasks
-            key={item.title}
+            key={item.id}
             title={item.title}
             priority={item.priority}
             comProject={item.project}
+            done={item.done}
           />
         ))}
       </div>
