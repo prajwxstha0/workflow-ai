@@ -1,37 +1,41 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { createProject, subscribetoProject } from "../services/projectService";
+import { useAuth } from "./AuthContext";
 
 const ProjectProgessContext = createContext();
 
 export const ProjectProgessProvider = ({ children }) => {
-  const [projects, setProjects] = useState([
-    {
-      name: "Mobile App v3",
-      status: "on-track",
-      percent: 0,
-      bgColor: "bg-green-100",
-    },
-    {
-      name: "API Gateway",
-      status: "at-risk",
-      percent: 0,
-      bgColor: "bg-orange-100",
-    },
-    {
-      name: "Design System",
-      status: "on-track",
-      percent: 0,
-      bgColor: "bg-green-100",
-    },
-    {
-      name: "Analytics Dashboard",
-      status: "delayed",
-      percent: 0,
-      bgColor: "bg-red-100",
-    },
-  ]);
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState([]);
+
+  const addProject = (projectData) => {
+    createProject(user.uid, projectData);
+  };
+
+  useEffect(() => {
+    if (!user) {
+      setProjects([]);
+      setLoading(false);
+      return;
+    }
+    const unsubscribe = subscribetoProject(
+      user.uid,
+      (project) => {
+        setProjects(project);
+        setLoading(false);
+      },
+      (err) => {
+        console.log(err);
+        setLoading(false);
+      },
+    );
+
+    return unsubscribe;
+  }, [user]);
 
   return (
-    <ProjectProgessContext.Provider value={{ projects }}>
+    <ProjectProgessContext.Provider value={{ projects, loading, addProject }}>
       {children}
     </ProjectProgessContext.Provider>
   );

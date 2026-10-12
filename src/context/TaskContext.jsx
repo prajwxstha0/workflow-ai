@@ -1,73 +1,65 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createTask,
+  deleteTaskById,
+  subscribetoTasks,
+  updateTaskById,
+} from "../services/taskService";
+import { useAuth } from "./AuthContext";
 
 const createTaskContext = createContext();
 
 const TaskContext = ({ children }) => {
-  const [task, settask] = useState([
-    {
-      title: "Design new UI",
-      project: "Mobile App v3",
-      priority: "high",
-      assignee: "John Doe",
-      duedate: "2023-07-15",
-      tag: "UI/UX",
-      description: "Design a new user interface for the mobile app.",
-      done: false,
-    },
-    {
-      title: "Implement API Gateway",
-      project: "API Gateway",
-      priority: "medium",
-      assignee: "Jane Smith",
-      duedate: "2023-07-20",
-      tag: "Backend",
-      description: "Implement the API Gateway for the application.",
-      done: false,
-    },
-    {
-      title: "Create Design System",
-      project: "Design System",
-      priority: "low",
-      assignee: "Alice Johnson",
-      duedate: "2023-07-25",
-      tag: "UI/UX",
-      description: "Create a design system for consistent UI components.",
-      done: false,
-    },
-    {
-      title: "Build Analytics Dashboard",
-      project: "Analytics Dashboard",
-      priority: "high",
-      assignee: "Bob Brown",
-      duedate: "2023-07-30",
-      tag: "Frontend",
-      description: "Build an analytics dashboard to visualize data.",
-      done: false,
-    },
-  ]);
+  const { user } = useAuth();
+  const [task, settask] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const addTask = (newTask) => {
-    settask((prevTasks) => [newTask, ...prevTasks]);
+  useEffect(() => {
+    if (!user) {
+      settask([]);
+      setLoading(false);
+      return;
+    }
+
+    const unsubscribe = subscribetoTasks(
+      user.uid,
+      (task) => {
+        settask(task);
+        setLoading(false);
+      },
+      (err) => {
+        console.log("error in data fetching");
+        setLoading(false);
+      },
+    );
+
+    return unsubscribe;
+  }, [user]);
+
+  const addTask = (taskData) => {
+    createTask(user.uid, taskData);
   };
 
-  const deleteTask = (taskTitle) => {
-    // Implement delete task logic here
-    settask((prevTasks) =>
-      prevTasks.filter((task) => task.title !== taskTitle),
-    );
+  const deleteTask = (taskId) => {
+    deleteTaskById(taskId);
   };
 
-  const updateTask = (projectTitle, done) => {
-    settask((prevTasks) =>
-      prevTasks.map((task) =>
-        task.title === projectTitle ? { ...task, done: done.done } : task,
-      ),
-    );
+  const updateTask = (taskId, changes) => {
+    updateTaskById(taskId, changes);
+  };
+
+  const taskCount = () => {
+    const totalTask = task.length;
+    const compeleteTask = task.filter((task) => task.done === true).length;
+    return {
+      totalTask,
+      compeleteTask,
+    };
   };
 
   // Get total and completed tasks for a project
-  const getProjectTaskCount = (projectName) => {
-    const projectTasks = task.filter((task) => task.project === projectName);
+  const getProjectTaskCount = (projectId) => {
+    const projectTasks = task.filter((task) => task.projectId === projectId);
 
     const totalTasks = projectTasks.length;
 
@@ -83,7 +75,15 @@ const TaskContext = ({ children }) => {
 
   return (
     <createTaskContext.Provider
-      value={{ task, addTask, deleteTask, updateTask, getProjectTaskCount }}
+      value={{
+        task,
+        loading,
+        addTask,
+        deleteTask,
+        updateTask,
+        getProjectTaskCount,
+        taskCount,
+      }}
     >
       {children}
     </createTaskContext.Provider>

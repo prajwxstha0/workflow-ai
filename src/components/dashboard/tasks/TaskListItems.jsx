@@ -2,7 +2,7 @@ import { useTask } from "../../../context/TaskContext";
 import TodaysTasks from "./TodaysTasks";
 
 const TaskListItems = ({ setShowTaskForm }) => {
-  const { task } = useTask();
+  const { task, loading } = useTask();
 
   return (
     <div className="h-100 overflow-y-auto flex flex-col gap-3 bg-white rounded-2xl items-start px-4 py-6">
@@ -16,14 +16,17 @@ const TaskListItems = ({ setShowTaskForm }) => {
         </button>
       </div>
       <div className="w-full flex flex-col gap-5 h-full">
-        {task.length === 0 && <span className="text-red-400">No task yet</span>}
+        {loading && <span>Loading...</span>}
+        {!loading && task.length === 0 && (
+          <span className="text-red-400">No task yet</span>
+        )}
 
         {task.map((item) => (
           <TodaysTasks
             key={item.id}
+            id={item.id}
             title={item.title}
             priority={item.priority}
-            comProject={item.project}
             done={item.done}
           />
         ))}

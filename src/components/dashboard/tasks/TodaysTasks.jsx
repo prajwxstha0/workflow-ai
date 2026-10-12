@@ -2,7 +2,7 @@ import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTask } from "../../../context/TaskContext";
 
-const TodaysTasks = ({ title, priority, done }) => {
+const TodaysTasks = ({ id, title, priority, done }) => {
   const { deleteTask, updateTask } = useTask();
   const priorityleveltext = {
     high: "text-red-600",
@@ -22,7 +22,7 @@ const TodaysTasks = ({ title, priority, done }) => {
       <span
         className={`cursor-pointer ${done ? "text-green-400" : "text-gray-300"}`}
         onClick={(e) => {
-          updateTask(title, { done: !done });
+          updateTask(id, { done: !done });
         }}
       >
         {done ? (
@@ -49,7 +49,7 @@ const TodaysTasks = ({ title, priority, done }) => {
         <button
           className="pr-2"
           onClick={(e) => {
-            deleteTask(title);
+            deleteTask(id);
           }}
         >
           ❌

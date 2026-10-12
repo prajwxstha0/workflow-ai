@@ -5,6 +5,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTask } from "../../context/TaskContext";
 import StateCard from "./StateCard";
 
 const stats = [
@@ -12,7 +13,7 @@ const stats = [
     icon: <FontAwesomeIcon icon={faTasks} />,
     iconBg: "#EEF2FF",
     label: "Tasks Today",
-    value: "4/9",
+    value: "",
     sublabel: "+2 from yesterday",
   },
   {
@@ -39,10 +40,21 @@ const stats = [
 ];
 
 const StateCardGrid = () => {
+  const { taskCount } = useTask();
+  const { totalTask, compeleteTask } = taskCount();
+
   return (
     <div className="grid grid-cols-1 justify-center sm:grid-cols-2 lg:grid-cols-4 gap-5 p-6">
       {stats.map((stat) => (
-        <StateCard key={stat.label} {...stat} />
+        <StateCard
+          key={stat.label}
+          {...stat}
+          value={
+            stat.label === "Tasks Today"
+              ? `${compeleteTask} / ${totalTask}`
+              : stat.value
+          }
+        />
       ))}
     </div>
   );

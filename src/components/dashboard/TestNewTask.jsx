@@ -1,37 +1,51 @@
 import { useRef, useState } from "react";
+import { useProjectProgress } from "../../context/ProjectProgessContext";
 import { useTask } from "../../context/TaskContext";
 
 const TestNewTask = ({ onSaveTask }) => {
   const projectref = useRef();
 
+  const { projects } = useProjectProgress();
+
   const [tasktitle, settasktitle] = useState("");
   const [taskdesc, settaskdesc] = useState("");
-  const [taskproject, settaskproject] = useState("Mobile App v3");
+  const [projectId, setprojectId] = useState("");
   const [taskpriority, settaskpriority] = useState("");
   const [prioritylevel, setprioritylevel] = useState("low");
   const [taskassignee, settaskassignee] = useState("");
   const [taskduedate, settaskduedate] = useState("");
   const [tasktag, settasktag] = useState("");
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState("")
 
   const { addTask } = useTask();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    if (saving) return;  
+    setError("")
+    setSaving(true)
 
+    try{
     const newTask = {
-      id: Date.now(),
       title: tasktitle,
-      project: taskproject,
+      projectId: projectId,
       priority: prioritylevel,
       assignee: taskassignee,
       duedate: taskduedate,
       tag: tasktag,
       description: taskdesc,
-    };
-
-    addTask(newTask);
-
-    onSaveTask();
+      };
+      await addTask(newTask);
+      await onSaveTask();
+    }
+    catch (err) {
+      console.log(err)
+      setError("Could not save the task. Please try again")
+    }
+    finally {
+      setSaving(false)
+    }
   };
 
   return (
@@ -60,14 +74,16 @@ const TestNewTask = ({ onSaveTask }) => {
         <label>Project</label>
         <select
           className="text-gray-700 outline-none border rounded-md px-5 py-1 focus:outline-none"
-          onClick={(e) => 
-            settaskproject(e.target.value)
+          onChange={(e) => 
+            setprojectId(e.target.value)
           }
         >
-          <option value="Mobile App v3">Mobile App v3</option>
-          <option value="API Gateway">API Gateway</option>
-          <option value="Design System">Design System</option>
-          <option value="Analytics Dashboard">Analytics Dashboard</option>
+          <option value="">
+            {projects.length ? "Select a project" : "Create a project first"}
+          </option>
+          {projects.map((p) => (
+            <option key={p.id} value={p.id}>{p.projectName }</option>
+          ))}
         </select>
       </div>
 
@@ -144,7 +160,7 @@ const TestNewTask = ({ onSaveTask }) => {
         type="submit"
         className="border mx-40 rounded-2xl cursor-pointer hover:bg-black"
       >
-        Submit
+        {saving ? "Saving...":"Submit"}
       </button>
     </form>
   );
