@@ -5,6 +5,7 @@ import {
   subscribetoTasks,
   updateTaskById,
 } from "../services/taskService";
+import { useActivity } from "./ActivityContext";
 import { useAuth } from "./AuthContext";
 
 const createTaskContext = createContext();
@@ -13,6 +14,13 @@ const TaskContext = ({ children }) => {
   const { user } = useAuth();
   const [task, settask] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [popup, setPopup] = useState("Task is deleted");
+  const { addActivity } = useActivity();
+
+  const clearError = () => {
+    setError("");
+  };
 
   useEffect(() => {
     if (!user) {
@@ -36,12 +44,24 @@ const TaskContext = ({ children }) => {
     return unsubscribe;
   }, [user]);
 
-  const addTask = (taskData) => {
-    createTask(user.uid, taskData);
+  const addTask = async (taskData) => {
+    await createTask(user.uid, taskData);
+    addActivity("created a new Task");
+    setLoading(false);
   };
 
-  const deleteTask = (taskId) => {
-    deleteTaskById(taskId);
+  const deleteTask = async (taskId, errmessage) => {
+    try {
+      setError("");
+      if (!user) {
+        throw new Error("You must be logged in to delete a task");
+      }
+
+      await deleteTaskById(taskId, user.uid);
+      setPopup();
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const updateTask = (taskId, changes) => {
@@ -78,6 +98,9 @@ const TaskContext = ({ children }) => {
       value={{
         task,
         loading,
+        error,
+        clearError,
+        popup,
         addTask,
         deleteTask,
         updateTask,

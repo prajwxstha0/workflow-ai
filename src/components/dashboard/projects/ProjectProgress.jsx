@@ -1,6 +1,6 @@
 const ProjectProgress = ({ item }) => {
   return (
-    <div className="flex flex-col gap-2 py-2 w-full">
+    <div className="flex flex-col gap-2 py-2 w-full overflow-auto">
       <div className="grid grid-cols-3 gap-2 w-full text-start items-center">
         <span className="text-[12px] font-medium">{item.projectName}</span>
         <span

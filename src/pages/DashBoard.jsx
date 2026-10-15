@@ -41,7 +41,7 @@ const DashBoard = () => {
         <TaskListItems setShowTaskForm={setshowTaskForm} />
       </div>
 
-      <div className="px-8 mb-6 overflow-y-visible grid text-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+      <div className="gap-5 px-8 mb-6 overflow-y-visible grid text-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         <ProjectProgressItems />
         <ActivityItem />
         <DeadlineItem />

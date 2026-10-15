@@ -10,7 +10,7 @@ import {
 
 const data = [
   { week: "W1", hours: 38, tasks: 22 },
-  { week: "W2", hours: 42, tasks: 28 },
+  { week: "W2", hours: 42, tasks: 50 },
   { week: "W3", hours: 32, tasks: 18 },
   { week: "W4", hours: 45, tasks: 34 },
 ];

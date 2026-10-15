@@ -25,7 +25,7 @@ const NewProjectForm = ({ onClose }) => {
       };
       await addProject(projectData);
       setSaving(false);
-      await onClose();
+      onClose();
     } catch (error) {
       console.log(error);
     } finally {

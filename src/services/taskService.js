@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   onSnapshot,
   query,
   serverTimestamp,
@@ -17,7 +18,7 @@ export async function createTask(userId, taskData) {
     ...taskData,
     userId,
     done: false,
-    creaedAt: serverTimestamp(),
+    createdAt: serverTimestamp(),
   });
 }
 
@@ -48,6 +49,18 @@ export async function updateTaskById(taskId, changes) {
   await updateDoc(doc(db, "tasks", taskId), changes);
 }
 
-export async function deleteTaskById(taskId) {
-  await deleteDoc(doc(db, "tasks", taskId));
+export async function deleteTaskById(taskId, userId) {
+  const taskRef = doc(db, "tasks", taskId);
+
+  const taskSnap = await getDoc(taskRef);
+
+  if (!taskSnap.exists()) {
+    throw new Error("Task not found");
+  }
+
+  if (taskSnap.data().userId !== userId) {
+    throw new Error("You cannot delete another user's task");
+  }
+
+  await deleteDoc(taskRef);
 }

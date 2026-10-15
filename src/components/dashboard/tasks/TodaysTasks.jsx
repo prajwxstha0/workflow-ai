@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTask } from "../../../context/TaskContext";
 
 const TodaysTasks = ({ id, title, priority, done }) => {
-  const { deleteTask, updateTask } = useTask();
+  const { deleteTask, updateTask, popup } = useTask();
   const priorityleveltext = {
     high: "text-red-600",
     medium: "text-amber-600",

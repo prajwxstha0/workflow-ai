@@ -1,4 +1,10 @@
-import { addDoc, collection, onSnapshot, query, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../firebase/config";
 
 const projectRef = collection(db, "projects");
@@ -11,8 +17,8 @@ export async function createProject(userId, projectData) {
   });
 }
 
-export async function subscribetoProject(userId, onData, onError) {
-  const q = query(projectRef)
+export function subscribetoProject(userId, onData, onError) {
+  const q = query(projectRef);
 
   return onSnapshot(
     q,
@@ -26,9 +32,9 @@ export async function subscribetoProject(userId, onData, onError) {
         const timeB = b.createdAt?.toMillis() ?? 0;
 
         return timeB - timeA;
-      })
-      onData(projects)
+      });
+      onData(projects);
     },
     onError,
-  )
+  );
 }

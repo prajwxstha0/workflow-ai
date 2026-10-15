@@ -7,15 +7,12 @@ import NewProjectForm from "./NewProjectForm";
 import ProjectProgress from "./ProjectProgress";
 
 const ProjectProgressItems = () => {
-  const { projects } = useProjectProgress();
+  const { projects, loading } = useProjectProgress();
   const { getProjectTaskCount } = useTask();
   const [showForm, setShowForm] = useState(false);
-  const [projectType, setProjectType] = useState("");
-
-  console.log(projects);
 
   return (
-    <div className="relative h-100 bg-white rounded-2xl px-4 py-6">
+    <div className="relative h-100 bg-white rounded-2xl px-4 py-6 overflow-auto">
       <div className="flex justify-between items-center pb-2">
         <h1 className="font-bold">Project Progress</h1>
 
@@ -27,6 +24,7 @@ const ProjectProgressItems = () => {
       </div>
 
       <div className="flex flex-col text-start overflow-y-auto w-full">
+        {loading && <span>Loading...</span>}
         {projects.length === 0 && (
           <span className="text-red-400">No project yet</span>
         )}

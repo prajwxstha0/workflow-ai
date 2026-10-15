@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { createProject, subscribetoProject } from "../services/projectService";
+import { useActivity } from "./ActivityContext";
 import { useAuth } from "./AuthContext";
 
 const ProjectProgessContext = createContext();
@@ -8,9 +9,17 @@ export const ProjectProgessProvider = ({ children }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
+  const { addActivity } = useActivity();
 
-  const addProject = (projectData) => {
-    createProject(user.uid, projectData);
+  const addProject = async (projectData) => {
+    try {
+      await createProject(user.uid, projectData);
+      addActivity("created a new Project");
+    } catch (error) {
+      console.error("project is not created");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -30,7 +39,6 @@ export const ProjectProgessProvider = ({ children }) => {
         setLoading(false);
       },
     );
-
     return unsubscribe;
   }, [user]);
 
